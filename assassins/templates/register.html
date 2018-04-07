@@ -1,0 +1,38 @@
+{% extends 'template.html' %}
+
+{% block title %} Register {% endblock %}
+
+
+{% block navtitle %} Before you can begin... {% endblock %}
+{% block subtitle %} Make an account. {% endblock %}
+
+
+{% block body %}
+
+
+
+<section id="contact">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        <p>If you've already made an account, login <a href="{{ url_for('login') }}">here</a>.</p>
+        <h2>Register</h2>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-danger"> {{ message }} </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+      <form method='POST' action='/register/'>
+        <p><input type="text" name="username" placeholder="Username" class="form-control"></p>
+        <p><input type="text" name="first_name" placeholder="First Name" class="form-control"></p>
+        <p><input type="text" name="last_name" placeholder="Last Name" class="form-control"></p>
+        <p><input type="password" name="password" placeholder="Password" class="form-control"></p>
+<p><input type="submit" class="btn btn-primary" value="Register"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

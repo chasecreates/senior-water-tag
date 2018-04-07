@@ -1,0 +1,92 @@
+{% extends 'template.html' %}
+
+{% block title %} Home {% endblock %}
+
+
+{% block navtitle %} Welcome to Senior Assassins <i>2018</i> {% endblock %}
+{% block subtitle %} It's here. The anticipation is real. Let the games begin. {% endblock %}
+
+
+{% block body %}
+
+<section id="about">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        <h2>Recent Kills</h2>
+        {% if recent_kills %}
+        <table class="table table-striped">
+    <thead>
+      <tr>
+
+        <th scope="col">Assassin</th>
+        <th scope="col">Prey</th>
+        <th scope="col">When</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for kill in recent_kills %}
+      <tr>
+        <td> {{ kill.a_uname }} </td>
+        <td> {{ kill.prey_uname }} </td>
+        <td>{{ kill.done_date.strftime(' %m/%d/%Y @ %X') }}</td>
+
+      </tr>
+      {% endfor %}
+
+    </tbody>
+  </table>
+  {% else %}
+  <div class="alert alert-danger">No assassinations yet! Who will be the first?</div>
+{% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        <h2>Leaderboard</h2>
+        {% if leaderboard_members %}
+        <table class="table table-striped">
+          <thead>
+            <tr>
+
+              <th scope="col">Nickname</th>
+              <th scope="col">Prey Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for member in leaderboard_members %}
+            <tr>
+
+              <td>{{ member.username }}</td>
+              <td>{{ member.kills }}</td>
+
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+{% else %}
+<div class="alert alert-danger">Leaderboard is dry. Get going</div>
+{% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        <h2>Information</h2>
+        <p class="lead">This year's edition of Senior Assassins is privately-organized and is no way related to, organized by, or affiliated with any school, organization or other institution. The game is completely automated and computerized. There
+        are no human organizers. Assassinations, record keeping, leaderboard and media are all managed automatically. </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

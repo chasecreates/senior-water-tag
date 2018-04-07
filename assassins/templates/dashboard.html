@@ -1,0 +1,97 @@
+{% extends 'template.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+
+{% block navtitle %} Dashboard {% endblock %}
+{% block subtitle %} An assassin's home. {% endblock %}
+
+
+{% block body %}
+
+
+
+<section id="contact">
+  <div class="container">
+  {% if user.is_out %}
+  <center><div class="alert alert-info">If you're seeing this, it obviously means you're out. That's okay! Support your friends
+    and influence the games from the outside.</div></center>
+  <blockquote class="blockquote text-center">
+  <p class="mb-0">It's okay to lose. Losing teaches you something.</p>
+  <footer class="blockquote-footer">Elizabeth Banks</footer>
+</blockquote>
+</div>
+  {% else %}
+  <div class="container">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <center>
+    <div class="alert alert-info">{{ message }} </div></center>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="row">
+
+      <div class="col-md-3 mx-auto">
+        <div class="card" style="width: 18rem;">
+          <div class="card-header">
+     Assassin Profile
+   </div>
+          <div class="card-body">
+            <p class="card-text">Username: {{ user.username }}</p>
+            <p class="card-text">Kills: {{ user.kills }}</p>
+            <p class="card-text">Assassinated:
+              {% if user.is_out %}
+              Yes
+              {% else %}
+              No
+              {% endif %}
+
+            </p>
+            {% if user.id == 2 %}
+<p class="card-text">
+<a href="{{ url_for('begin_games') }}"  <btn class="btn btn-primary">Begin the games</btn>
+</a>
+</p>
+{% endif %}
+<p class="card-text">
+<a href="/been_had/{{ user.id }}"  <btn class="btn btn-danger">I've been assassinated</btn>
+</a>
+</p>
+
+
+</div>
+        </div>
+      </div>
+      {% if hit and target %}
+      <div class="col-md-3 mx-auto">
+        <div class="card" style="width: 18rem;">
+          <div class="card-header">
+       Your Target
+     </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ target.first_name }} {{ target.last_name }}</h5>
+            <p class="card-text">Also known as: {{ target.username }}</p>
+            <p class="card-text">Get your target. Win the game.</p>
+            {% if hit.a_ver == True and hit.prey_ver == False %}
+            <div class="alert alert-success">We're just waiting for your target to verify </div>
+            {% elif hit.a_ver == False and hit.prey_ver == False %}
+
+
+          <a href="/got_them/{{ target. id}}"  <btn class="btn btn-success">Target neutralized</btn></a>
+           {% elif hit.a_ver == False and hit.prey_ver == True %}
+           Waiting on you to confirm...
+             <a href="/got_them/{{ target. id}}"  <btn class="btn btn-success">Target neutralized</btn></a>
+             {% else %}
+             {% endif %}
+          </div>
+        </div>
+      </div>
+{% endif %}
+
+    </div>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}
